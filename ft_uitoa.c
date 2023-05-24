@@ -1,18 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_uitoa.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tfinni <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 17:08:44 by tfinni            #+#    #+#             */
-/*   Updated: 2022/10/31 12:39:01 by tfinni           ###   ########.fr       */
+/*   Created: 2023/02/05 17:56:01 by tfinni            #+#    #+#             */
+/*   Updated: 2023/02/05 17:56:38 by tfinni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	ft_bzero(void *s, size_t n)
+static int	ft_uintlen(unsigned int n)
 {
-	ft_memset(s, '\0', n);
+	int	len;
+
+	len = 0;
+	while (n > 0)
+	{
+		len++;
+		n = n / 10;
+	}
+	return (len);
+}
+
+char	*ft_uitoa(unsigned int n)
+{
+	char	*str;
+	int		len;
+
+	len = ft_uintlen(n);
+	str = malloc(sizeof(char) * len + 1);
+	if (!str)
+		return (NULL);
+	str[len] = '\0';
+	while (n > 0)
+	{
+		len--;
+		str[len] = n % 10 + '0';
+		n = n / 10;
+	}
+	return (str);
 }
